@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="dao.HouseDao">
+  <select id="mohuselect" resultType="House" resultMap="Houseall">
+      SELECT * FROM `house` h INNER JOIN  street s ON h.STREET_ID=s.SID
+	  INNER JOIN `type` t ON t.TID=h.type_id
+      INNER JOIN district d ON d.DID=s.DISTRICT_ID
+  <where>
+  		<if test="title!=null and title!=''">
+        	TITLE like concat('%',#{TITLE},'%')
+        </if>
+        <if test="STREET_ID!=0 ">
+            and   STREET_ID =#{STREET_ID}
+        </if>
+        <if test="type_id!=0">
+            and   type_id =#{type_id}
+        </if>
+        <if test="PRICE>0">
+        	and  PRICE=#{PRICE}
+        </if>
+        <if test="FLOORAGE>0">
+            and  FLOORAGE=#{FLOORAGE}
+        </if>
+  </where>
+
+  </select>
+ 
+ <resultMap type="House" id="Houseall" autoMapping="true">
+    <id column="id" property="id"/>
+    <association property="district" javaType="District"></association>
+    <association property="street" javaType="Street"></association>
+    <association property="type" javaType="Type"></association>
+ </resultMap>
+ 
+ <select id="selectdistrict" resultType="District">
+      select * from district
+ </select>
+ <select id="selectstreet" resultType="Street">
+      select * from street
+ </select>
+ <select id="selecttype" resultType="Type">
+      select * from type
+ </select>
+</mapper>

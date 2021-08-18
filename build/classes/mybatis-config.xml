@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+<!--调用数据库连接msql.properties 的file文件-->
+	<properties resource="msql.properties"/> 
+
+
+<settings>
+<!-- 日志添加--> 
+     <setting name="logImpl" value="STDOUT_LOGGING" /> 
+<!-- 开启所有表的自动增长-->
+     <setting name="useGeneratedKeys" value="true"/> 
+     <setting name="autoMappingBehavior" value="FULL"/>
+<!--延迟加载全局关闭  -->
+<!--      <setting name="" value="true"/>-->
+</settings> 
+
+<!--取别名标签<typeAliases>  -->
+<!--扫描entity包下的 所有实体类  -->
+<typeAliases>
+	<package name="entity"/>	 
+</typeAliases>
+
+   
+  <environments default="development">
+    <environment id="development">
+      <transactionManager type="JDBC"/>
+      <dataSource type="POOLED">
+        <property name="driver" value="${driver}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${user}"/>
+        <property name="password" value="${password}"/>
+      </dataSource>
+    </environment>
+  </environments>
+  <!--扫描包  dao层接口  -->
+  <mappers>
+    <package name="dao"/>
+  </mappers>
+</configuration>
